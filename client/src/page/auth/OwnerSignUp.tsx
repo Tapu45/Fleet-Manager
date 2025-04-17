@@ -50,7 +50,7 @@ function OwnerSignup() {
 
   const handlePayment = async () => {
     try {
-      const response = await fetch('http://localhost:7000/api/auth/signup', {
+      const response = await fetch('https://fleet-manager-oq44.onrender.com/api/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

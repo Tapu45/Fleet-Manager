@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create an Axios instance with default configuration
 const api = axios.create({
-  baseURL: 'http://localhost:7000/api', // Base URL for your API
+  baseURL: 'https://fleet-manager-oq44.onrender.com/api', // Base URL for your API
   timeout: 5000, // Request timeout in milliseconds
   headers: {
     'Content-Type': 'application/json', // Default content type
