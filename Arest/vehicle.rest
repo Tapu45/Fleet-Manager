@@ -1,0 +1,42 @@
+### Add Vehicle
+POST http://localhost:7000/api/owners/vehicles
+Content-Type: application/json
+
+{
+  "ownerId": 1,
+  "chassisNo": "CH123453",
+  "engineNo": "EN654329",
+  "regdNo": "REG132",
+  "fuelType": "Petrol",
+  "insuranceCompany": "ABC Insurance",
+  "insurancePolicyNo": "POL123465",
+  "insuranceValidUpto": "2025-05-16",
+  "puccNo": "PUCC132",
+  "puccValidUpto": "2025-05-16"
+}
+
+###
+
+### Manage (Update) Vehicle
+PUT http://localhost:7000/api/owners/vehicles/1
+Content-Type: application/json
+
+{
+  "chassisNo": "CH123456_UPDATED",
+  "engineNo": "EN654321_UPDATED",
+  "regdNo": "REG123_UPDATED",
+  "fuelType": "Diesel",
+  "insuranceCompany": "XYZ Insurance",
+  "insurancePolicyNo": "POL654321",
+  "insuranceValidUpto": "2026-12-31",
+  "puccNo": "PUCC654",
+  "puccValidUpto": "2026-12-31"
+}
+
+###
+
+### Remove Vehicle
+DELETE http://localhost:7000/api/owners/vehicles/1
+
+### Fetch Vehicles by Owner
+GET http://localhost:7000/api/owners/1/vehicles

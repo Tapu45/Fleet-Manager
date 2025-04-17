@@ -1,0 +1,92 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Plan {
+  id    Int    @id @default(autoincrement()) // Primary key
+  name  String @unique // Plan name (e.g., Bronze, Silver, Gold)
+  price Float // Plan price
+
+  owners Owner[] // Relation to Owners
+}
+
+model Owner {
+  id            Int               @id @default(autoincrement()) // Primary key
+  name          String // Owner's name
+  email         String            @unique // Owner's email
+  password      String // Owner's password
+  adhaar        String            @unique // Owner's Aadhaar number
+  planId        Int               @default(1)
+  plan          Plan              @relation(fields: [planId], references: [id]) // Relation to Plan
+  notifications NotificationLog[]
+  vehicles      Vehicle[] // Relation to VehicleOwner
+  drivers       Driver[] // Relation to Driver
+  createdAt     DateTime          @default(now()) // Record creation timestamp
+  updatedAt     DateTime          @updatedAt // Record update timestamp
+}
+
+model Driver {
+  id               Int               @id @default(autoincrement()) // Primary key
+  name             String // Driver's name
+  email            String            @unique // Driver's email
+  password         String // Driver's password
+  licenseNo        String            @unique // Driver's license number
+  licenseValidUpto DateTime // License validity date
+  vehicleClass     String // Vehicle class
+  adhaar           String            @unique // Driver's Aadhaar number
+  notifications    NotificationLog[]
+  ownerId          Int // Foreign key to Owner
+  owner            Owner             @relation(fields: [ownerId], references: [id]) // Relation to Owner
+
+  vehicle Vehicle?
+
+  createdAt DateTime @default(now()) // Record creation timestamp
+  updatedAt DateTime @updatedAt // Record update timestamp
+}
+
+model Vehicle {
+  id                 Int               @id @default(autoincrement()) // Primary key
+  chassisNo          String // Chassis No
+  engineNo           String // Engine No
+  regdNo             String // Registration No
+  fuelType           String // Fuel Type
+  insuranceCompany   String // Insurance Company
+  insurancePolicyNo  String // Insurance Policy No
+  insuranceValidUpto DateTime // Insurance Valid Upto
+  insuranceDocument  String? // Path or URL for the insurance document
+  puccNo             String // PUCC No
+  puccValidUpto      DateTime // PUCC Valid Upto
+  pucDocument        String? // Path or URL for the PUC document
+  status             String            @default("free")
+  notifications      NotificationLog[]
+  driver             Driver?           @relation(fields: [driverId], references: [id]) // Relation to Driver
+  driverId           Int?              @unique
+  ownerId            Int // Foreign key to VehicleOwner
+  owner              Owner             @relation(fields: [ownerId], references: [id]) // Relation to Owner
+  createdAt          DateTime          @default(now()) // Record creation timestamp
+  updatedAt          DateTime          @updatedAt // Record update timestamp
+}
+
+model NotificationLog {
+  id        Int      @id @default(autoincrement()) // Primary key
+  vehicleId Int // Foreign key to Vehicle
+  vehicle   Vehicle  @relation(fields: [vehicleId], references: [id]) // Relation to Vehicle
+  ownerId   Int // Foreign key to Owner
+  owner     Owner    @relation(fields: [ownerId], references: [id]) // Relation to Owner
+  driverId  Int? // Foreign key to Driver (optional, as not all vehicles may have a driver assigned)
+  driver    Driver?  @relation(fields: [driverId], references: [id]) // Relation to Driver
+  message   String // Notification message
+  sentAt    DateTime @default(now()) // Timestamp of when the notification was sent
+}

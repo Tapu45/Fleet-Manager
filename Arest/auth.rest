@@ -1,0 +1,57 @@
+# ### Test Owner Signup - Successful Case
+# POST http://localhost:7000/api/owners/signup
+# Content-Type: application/json
+
+# {
+#   "name": "John Doe",
+#   "email": "john.doe@example.com",
+#   "password": "securepassword",
+#   "adhaarNo": "123456789012"
+# }
+
+# ### Test Owner Signup - Missing Fields
+# POST http://localhost:7000/api/owners/signup
+# Content-Type: application/json
+
+# {
+#   "name": "John Doe",
+#   "email": "john.doe@example.com",
+#   "password": "securepassword"
+# }
+
+# ### Test Owner Signup - Invalid Aadhaar Number
+# POST http://localhost:7000/api/owners/signup
+# Content-Type: application/json
+
+# {
+#   "name": "John Doe",
+#   "email": "john.doe@example.com",
+#   "password": "securepassword",
+#   "adhaarNo": "12345"
+# }
+
+# ### Test Owner Signup - Duplicate Email or Aadhaar
+# POST http://localhost:3000/api/owners/signup
+# Content-Type: application/json
+
+# {
+#   "name": "Jane Doe",
+#   "email": "john.doe@example.com",
+#   "password": "anotherpassword",
+#   "adhaarNo": "123456789012"
+# }
+
+
+POST http://localhost:7000/api/owners/driver/signup
+Content-Type: application/json
+
+{
+  "name": "Jane Doe",
+  "email": "jane.doe@example.com",
+  "ownerEmail": "john.doe@example.com",
+  "password": "securepassword",
+  "licenseNo": "DL123456789",
+  "licenseValidUpto": "2026-12-31",
+  "vehicleClass": "LMV",
+  "adhaar": "987654321012"
+}
