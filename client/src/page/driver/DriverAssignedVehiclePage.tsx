@@ -4,7 +4,7 @@ import { getAssignedVehicle, freeVehicle } from '../../utils/api';
 const DriverAssignedVehiclePage: React.FC = () => {
   const [vehicle, setVehicle] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
-  const [message, setMessage] = useState<string | null>(null);
+  const [, setMessage] = useState<string | null>(null);
   const driverId = localStorage.getItem('userId'); // Assuming driverId is stored in localStorage
 
   useEffect(() => {
